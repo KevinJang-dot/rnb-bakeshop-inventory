@@ -3,32 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>R&B Bakeshop Inventory System</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="login-container">
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="login-container">
 
         <div class="login-box">
+
             <h1>R&B Bakeshop</h1>
             <h2>Inventory System</h2>
 
             <form id="loginForm">
 
                 <label for="email">Email</label>
-                <input 
-                    type="email" 
-                    id="email" 
+
+                <input
+                    type="email"
+                    id="email"
                     placeholder="Enter your email"
                     required
                 >
 
                 <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
+
+                <input
+                    type="password"
+                    id="password"
                     placeholder="Enter your password"
                     required
                 >
@@ -38,10 +44,70 @@
                 <p id="loginMessage"></p>
 
             </form>
+
         </div>
 
     </div>
 
+
+    <!-- DASHBOARD -->
+    <div id="dashboardPage" class="dashboard-container">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>R&B Bakeshop</h1>
+                <p>Inventory Management System</p>
+            </div>
+
+            <button id="logoutButton">Logout</button>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <h2>Dashboard</h2>
+
+            <p id="welcomeMessage">
+                Welcome to the R&B Bakeshop Inventory System.
+            </p>
+
+
+            <div class="dashboard-cards">
+
+                <div class="dashboard-card">
+                    <h3>Products</h3>
+                    <p>Manage bakery products.</p>
+                    <button>View Products</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Inventory</h3>
+                    <p>Monitor available stocks.</p>
+                    <button>View Inventory</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Suppliers</h3>
+                    <p>Manage supplier information.</p>
+                    <button>View Suppliers</button>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Reports</h3>
+                    <p>View inventory reports.</p>
+                    <button>View Reports</button>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
     <script type="module" src="script.js"></script>
+
 </body>
 </html>
