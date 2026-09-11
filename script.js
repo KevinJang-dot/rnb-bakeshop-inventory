@@ -8,7 +8,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
-    getFirestore
+    getFirestore,
+    collection,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
@@ -32,22 +34,28 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
+
 // GET HTML ELEMENTS
 
 const loginPage = document.getElementById("loginPage");
+
 const dashboardPage = document.getElementById("dashboardPage");
+
 const loginForm = document.getElementById("loginForm");
+
 const loginMessage = document.getElementById("loginMessage");
+
 const logoutButton = document.getElementById("logoutButton");
+
 const welcomeMessage = document.getElementById("welcomeMessage");
 
+const productsButton = document.getElementById("productsButton");
 
-// CHECK IF ELEMENTS EXIST
+const productsSection = document.getElementById("productsSection");
 
-console.log("Login Page:", loginPage);
-console.log("Dashboard Page:", dashboardPage);
-console.log("Login Form:", loginForm);
-console.log("Logout Button:", logoutButton);
+const productsList = document.getElementById("productsList");
+
+const backToDashboardButton = document.getElementById("backToDashboardButton");
 
 
 // LOGIN
@@ -57,6 +65,7 @@ loginForm.addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const email = document.getElementById("email").value.trim();
+
     const password = document.getElementById("password").value;
 
     loginMessage.textContent = "Logging in...";
@@ -87,13 +96,10 @@ loginForm.addEventListener("submit", async function(event) {
 
 onAuthStateChanged(auth, function(user) {
 
-    console.log("Authentication state:", user);
-
     if (user) {
 
-        console.log("User is logged in:", user.email);
-
         loginPage.style.display = "none";
+
         dashboardPage.style.display = "block";
 
         welcomeMessage.textContent =
@@ -101,12 +107,76 @@ onAuthStateChanged(auth, function(user) {
 
     } else {
 
-        console.log("No user is logged in.");
-
         loginPage.style.display = "flex";
+
         dashboardPage.style.display = "none";
 
     }
+
+});
+
+
+// SHOW PRODUCTS
+
+productsButton.addEventListener("click", async function() {
+
+    productsSection.style.display = "block";
+
+    productsList.textContent = "Loading products...";
+
+    try {
+
+        const productsSnapshot = await getDocs(
+            collection(db, "products")
+        );
+
+        productsList.innerHTML = "";
+
+        if (productsSnapshot.empty) {
+
+            productsList.textContent = "No products found.";
+
+            return;
+
+        }
+
+        productsSnapshot.forEach(function(documentSnapshot) {
+
+            const product = documentSnapshot.data();
+
+            const productCard = document.createElement("div");
+
+            productCard.className = "product-card";
+
+            productCard.innerHTML = `
+                <h3>${product.name}</h3>
+                <p>Category: ${product.category}</p>
+                <p>Price: ₱${product.price}</p>
+                <p>Stock: ${product.stock}</p>
+                <p>Reorder Level: ${product.reorderLevel}</p>
+            `;
+
+            productsList.appendChild(productCard);
+
+        });
+
+    } catch (error) {
+
+        console.error("Error loading products:", error);
+
+        productsList.textContent =
+            "Unable to load products.";
+
+    }
+
+});
+
+
+// BACK TO DASHBOARD
+
+backToDashboardButton.addEventListener("click", function() {
+
+    productsSection.style.display = "none";
 
 });
 
