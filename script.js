@@ -135,6 +135,33 @@ const supplierMessage =
     document.getElementById("supplierMessage");
 
 
+// REPORTS
+
+const reportsButton =
+    document.getElementById("reportsButton");
+
+const reportsSection =
+    document.getElementById("reportsSection");
+
+const backFromReportsButton =
+    document.getElementById("backFromReportsButton");
+
+const totalProducts =
+    document.getElementById("totalProducts");
+
+const totalStock =
+    document.getElementById("totalStock");
+
+const lowStockProducts =
+    document.getElementById("lowStockProducts");
+
+const totalSuppliers =
+    document.getElementById("totalSuppliers");
+
+const reportList =
+    document.getElementById("reportList");
+
+
 // ==================================================
 // LOGIN
 // ==================================================
@@ -237,6 +264,9 @@ productsButton.addEventListener(
         suppliersSection.style.display =
             "none";
 
+        reportsSection.style.display =
+            "none";
+
         productsList.textContent =
             "Loading products...";
 
@@ -332,8 +362,6 @@ async function loadProducts() {
             `;
 
 
-            // EDIT
-
             const editButton =
                 productCard.querySelector(
                     ".edit-product-button"
@@ -352,8 +380,6 @@ async function loadProducts() {
                 }
             );
 
-
-            // DELETE
 
             const deleteButton =
                 productCard.querySelector(
@@ -734,7 +760,7 @@ cancelProductButton.addEventListener(
 );
 
 
-// BACK TO DASHBOARD FROM PRODUCTS
+// BACK FROM PRODUCTS
 
 backToDashboardButton.addEventListener(
     "click",
@@ -765,6 +791,9 @@ inventoryButton.addEventListener(
             "none";
 
         suppliersSection.style.display =
+            "none";
+
+        reportsSection.style.display =
             "none";
 
         addProductForm.style.display =
@@ -890,8 +919,6 @@ async function loadInventory() {
             `;
 
 
-            // STOCK IN
-
             const stockInButton =
                 inventoryCard.querySelector(
                     ".stock-in-button"
@@ -910,8 +937,6 @@ async function loadInventory() {
                 }
             );
 
-
-            // STOCK OUT
 
             const stockOutButton =
                 inventoryCard.querySelector(
@@ -1145,6 +1170,9 @@ suppliersButton.addEventListener(
         inventorySection.style.display =
             "none";
 
+        reportsSection.style.display =
+            "none";
+
         addProductForm.style.display =
             "none";
 
@@ -1248,8 +1276,6 @@ async function loadSuppliers() {
             `;
 
 
-            // EDIT SUPPLIER
-
             const editButton =
                 supplierCard.querySelector(
                     ".edit-supplier-button"
@@ -1268,8 +1294,6 @@ async function loadSuppliers() {
                 }
             );
 
-
-            // DELETE SUPPLIER
 
             const deleteButton =
                 supplierCard.querySelector(
@@ -1602,6 +1626,259 @@ backFromSuppliersButton.addEventListener(
             "none";
 
         addSupplierForm.style.display =
+            "none";
+
+    }
+);
+
+
+// ==================================================
+// REPORTS
+// ==================================================
+
+
+// SHOW REPORTS
+
+reportsButton.addEventListener(
+    "click",
+    async function() {
+
+        productsSection.style.display =
+            "none";
+
+        inventorySection.style.display =
+            "none";
+
+        suppliersSection.style.display =
+            "none";
+
+        addProductForm.style.display =
+            "none";
+
+        reportsSection.style.display =
+            "block";
+
+        reportList.textContent =
+            "Loading report...";
+
+
+        try {
+
+            await loadReports();
+
+        } catch (error) {
+
+            console.error(
+                "Error loading reports:",
+                error
+            );
+
+            reportList.textContent =
+                "Unable to load reports.";
+
+        }
+
+    }
+);
+
+
+// LOAD REPORTS
+
+async function loadReports() {
+
+    // GET PRODUCTS
+
+    const productsSnapshot =
+        await getDocs(
+            collection(
+                db,
+                "products"
+            )
+        );
+
+
+    // GET SUPPLIERS
+
+    const suppliersSnapshot =
+        await getDocs(
+            collection(
+                db,
+                "suppliers"
+            )
+        );
+
+
+    let productCount = 0;
+
+    let stockCount = 0;
+
+    let lowStockCount = 0;
+
+
+    reportList.innerHTML = "";
+
+
+    // CREATE REPORT TABLE
+
+    const table =
+        document.createElement("table");
+
+
+    table.style.width =
+        "100%";
+
+    table.style.borderCollapse =
+        "collapse";
+
+
+    const headerRow =
+        document.createElement("tr");
+
+
+    headerRow.innerHTML = `
+        <th style="border: 1px solid #ccc; padding: 10px;">
+            Product
+        </th>
+
+        <th style="border: 1px solid #ccc; padding: 10px;">
+            Category
+        </th>
+
+        <th style="border: 1px solid #ccc; padding: 10px;">
+            Stock
+        </th>
+
+        <th style="border: 1px solid #ccc; padding: 10px;">
+            Reorder Level
+        </th>
+
+        <th style="border: 1px solid #ccc; padding: 10px;">
+            Status
+        </th>
+    `;
+
+
+    table.appendChild(
+        headerRow
+    );
+
+
+    productsSnapshot.forEach(
+        function(documentSnapshot) {
+
+            const product =
+                documentSnapshot.data();
+
+
+            const stock =
+                Number(product.stock);
+
+            const reorderLevel =
+                Number(product.reorderLevel);
+
+
+            productCount++;
+
+            stockCount += stock;
+
+
+            let status =
+                "Available";
+
+
+            if (
+                stock <= reorderLevel
+            ) {
+
+                lowStockCount++;
+
+                status =
+                    "LOW STOCK";
+
+            }
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    ${product.name}
+                </td>
+
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    ${product.category}
+                </td>
+
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    ${stock}
+                </td>
+
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    ${reorderLevel}
+                </td>
+
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    ${status}
+                </td>
+            `;
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    // UPDATE SUMMARY
+
+    totalProducts.textContent =
+        productCount;
+
+
+    totalStock.textContent =
+        stockCount;
+
+
+    lowStockProducts.textContent =
+        lowStockCount;
+
+
+    totalSuppliers.textContent =
+        suppliersSnapshot.size;
+
+
+    // SHOW TABLE
+
+    if (
+        productsSnapshot.empty
+    ) {
+
+        reportList.textContent =
+            "No products available for reporting.";
+
+        return;
+
+    }
+
+
+    reportList.appendChild(
+        table
+    );
+
+}
+
+
+// BACK FROM REPORTS
+
+backFromReportsButton.addEventListener(
+    "click",
+    function() {
+
+        reportsSection.style.display =
             "none";
 
     }
