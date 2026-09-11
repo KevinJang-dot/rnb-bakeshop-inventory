@@ -60,7 +60,7 @@ const welcomeMessage =
     document.getElementById("welcomeMessage");
 
 
-// PRODUCTS ELEMENTS
+// PRODUCTS
 
 const productsButton =
     document.getElementById("productsButton");
@@ -90,7 +90,7 @@ const productMessage =
     document.getElementById("productMessage");
 
 
-// INVENTORY ELEMENTS
+// INVENTORY
 
 const inventoryButton =
     document.getElementById("inventoryButton");
@@ -105,98 +105,160 @@ const backFromInventoryButton =
     document.getElementById("backFromInventoryButton");
 
 
+// SUPPLIERS
+
+const suppliersButton =
+    document.getElementById("suppliersButton");
+
+const suppliersSection =
+    document.getElementById("suppliersSection");
+
+const suppliersList =
+    document.getElementById("suppliersList");
+
+const backFromSuppliersButton =
+    document.getElementById("backFromSuppliersButton");
+
+const addSupplierButton =
+    document.getElementById("addSupplierButton");
+
+const addSupplierForm =
+    document.getElementById("addSupplierForm");
+
+const saveSupplierButton =
+    document.getElementById("saveSupplierButton");
+
+const cancelSupplierButton =
+    document.getElementById("cancelSupplierButton");
+
+const supplierMessage =
+    document.getElementById("supplierMessage");
+
+
+// ==================================================
 // LOGIN
+// ==================================================
 
-loginForm.addEventListener("submit", async function(event) {
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const email =
-        document.getElementById("email").value.trim();
+        const email =
+            document.getElementById("email")
+                .value
+                .trim();
 
-    const password =
-        document.getElementById("password").value;
-
-    loginMessage.textContent =
-        "Logging in...";
-
-    try {
-
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-        loginMessage.textContent = "";
-
-    } catch (error) {
-
-        console.error(
-            "Login error:",
-            error
-        );
+        const password =
+            document.getElementById("password")
+                .value;
 
         loginMessage.textContent =
-            "Invalid email or password.";
+            "Logging in...";
+
+
+        try {
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            loginMessage.textContent = "";
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            loginMessage.textContent =
+                "Invalid email or password.";
+
+        }
 
     }
+);
 
-});
 
-
+// ==================================================
 // AUTHENTICATION STATE
+// ==================================================
 
-onAuthStateChanged(auth, function(user) {
+onAuthStateChanged(
+    auth,
+    function(user) {
 
-    if (user) {
+        if (user) {
 
-        loginPage.style.display = "none";
+            loginPage.style.display =
+                "none";
 
-        dashboardPage.style.display = "block";
+            dashboardPage.style.display =
+                "block";
 
-        welcomeMessage.textContent =
-            "Welcome, " + user.email + "!";
+            welcomeMessage.textContent =
+                "Welcome, " + user.email + "!";
 
-    } else {
+        } else {
 
-        loginPage.style.display = "flex";
+            loginPage.style.display =
+                "flex";
 
-        dashboardPage.style.display = "none";
+            dashboardPage.style.display =
+                "none";
+
+        }
 
     }
+);
 
-});
+
+// ==================================================
+// PRODUCTS
+// ==================================================
 
 
 // SHOW PRODUCTS
 
-productsButton.addEventListener("click", async function() {
+productsButton.addEventListener(
+    "click",
+    async function() {
 
-    productsSection.style.display = "block";
+        productsSection.style.display =
+            "block";
 
-    inventorySection.style.display = "none";
+        inventorySection.style.display =
+            "none";
 
-    productsList.textContent =
-        "Loading products...";
-
-    try {
-
-        await loadProducts();
-
-    } catch (error) {
-
-        console.error(
-            "Error loading products:",
-            error
-        );
+        suppliersSection.style.display =
+            "none";
 
         productsList.textContent =
-            "Unable to load products.";
+            "Loading products...";
+
+
+        try {
+
+            await loadProducts();
+
+        } catch (error) {
+
+            console.error(
+                "Error loading products:",
+                error
+            );
+
+            productsList.textContent =
+                "Unable to load products.";
+
+        }
 
     }
-
-});
+);
 
 
 // LOAD PRODUCTS
@@ -205,10 +267,14 @@ async function loadProducts() {
 
     const productsSnapshot =
         await getDocs(
-            collection(db, "products")
+            collection(
+                db,
+                "products"
+            )
         );
 
     productsList.innerHTML = "";
+
 
     if (productsSnapshot.empty) {
 
@@ -219,6 +285,7 @@ async function loadProducts() {
 
     }
 
+
     productsSnapshot.forEach(
         function(documentSnapshot) {
 
@@ -228,22 +295,32 @@ async function loadProducts() {
             const productId =
                 documentSnapshot.id;
 
+
             const productCard =
                 document.createElement("div");
 
             productCard.className =
                 "product-card";
 
+
             productCard.innerHTML = `
                 <h3>${product.name}</h3>
 
-                <p>Category: ${product.category}</p>
+                <p>
+                    Category: ${product.category}
+                </p>
 
-                <p>Price: ₱${product.price}</p>
+                <p>
+                    Price: ₱${product.price}
+                </p>
 
-                <p>Stock: ${product.stock}</p>
+                <p>
+                    Stock: ${product.stock}
+                </p>
 
-                <p>Reorder Level: ${product.reorderLevel}</p>
+                <p>
+                    Reorder Level: ${product.reorderLevel}
+                </p>
 
                 <button class="edit-product-button">
                     Edit
@@ -255,12 +332,13 @@ async function loadProducts() {
             `;
 
 
-            // EDIT BUTTON
+            // EDIT
 
             const editButton =
                 productCard.querySelector(
                     ".edit-product-button"
                 );
+
 
             editButton.addEventListener(
                 "click",
@@ -275,12 +353,13 @@ async function loadProducts() {
             );
 
 
-            // DELETE BUTTON
+            // DELETE
 
             const deleteButton =
                 productCard.querySelector(
                     ".delete-product-button"
                 );
+
 
             deleteButton.addEventListener(
                 "click",
@@ -394,7 +473,10 @@ saveProductButton.addEventListener(
         try {
 
             await addDoc(
-                collection(db, "products"),
+                collection(
+                    db,
+                    "products"
+                ),
                 {
                     name: name,
                     category: category,
@@ -461,6 +543,7 @@ async function editProduct(
             product.name
         );
 
+
     if (newName === null) {
         return;
     }
@@ -471,6 +554,7 @@ async function editProduct(
             "Category:",
             product.category
         );
+
 
     if (newCategory === null) {
         return;
@@ -483,6 +567,7 @@ async function editProduct(
             product.price
         );
 
+
     if (newPrice === null) {
         return;
     }
@@ -494,6 +579,7 @@ async function editProduct(
             product.stock
         );
 
+
     if (newStock === null) {
         return;
     }
@@ -504,6 +590,7 @@ async function editProduct(
             "Reorder Level:",
             product.reorderLevel
         );
+
 
     if (newReorderLevel === null) {
         return;
@@ -562,6 +649,7 @@ async function editProduct(
             "Product updated successfully!"
         );
 
+
         await loadProducts();
 
     } catch (error) {
@@ -591,6 +679,7 @@ async function deleteProduct(
             "Are you sure you want to delete this product?"
         );
 
+
     if (!confirmDelete) {
         return;
     }
@@ -611,6 +700,7 @@ async function deleteProduct(
             "Product deleted successfully!"
         );
 
+
         await loadProducts();
 
     } catch (error) {
@@ -629,7 +719,7 @@ async function deleteProduct(
 }
 
 
-// CANCEL ADD PRODUCT
+// CANCEL PRODUCT FORM
 
 cancelProductButton.addEventListener(
     "click",
@@ -674,6 +764,9 @@ inventoryButton.addEventListener(
         productsSection.style.display =
             "none";
 
+        suppliersSection.style.display =
+            "none";
+
         addProductForm.style.display =
             "none";
 
@@ -710,8 +803,12 @@ async function loadInventory() {
 
     const productsSnapshot =
         await getDocs(
-            collection(db, "products")
+            collection(
+                db,
+                "products"
+            )
         );
+
 
     inventoryList.innerHTML = "";
 
@@ -735,6 +832,7 @@ async function loadInventory() {
             const productId =
                 documentSnapshot.id;
 
+
             const stock =
                 Number(product.stock);
 
@@ -749,10 +847,13 @@ async function loadInventory() {
                 "product-card";
 
 
-            let stockStatus = "Stock Available";
+            let stockStatus =
+                "Stock Available";
 
 
-            if (stock <= reorderLevel) {
+            if (
+                stock <= reorderLevel
+            ) {
 
                 stockStatus =
                     "LOW STOCK";
@@ -796,6 +897,7 @@ async function loadInventory() {
                     ".stock-in-button"
                 );
 
+
             stockInButton.addEventListener(
                 "click",
                 function() {
@@ -815,6 +917,7 @@ async function loadInventory() {
                 inventoryCard.querySelector(
                     ".stock-out-button"
                 );
+
 
             stockOutButton.addEventListener(
                 "click",
@@ -1012,7 +1115,7 @@ async function stockOut(
 }
 
 
-// BACK TO DASHBOARD FROM INVENTORY
+// BACK FROM INVENTORY
 
 backFromInventoryButton.addEventListener(
     "click",
@@ -1025,7 +1128,489 @@ backFromInventoryButton.addEventListener(
 );
 
 
+// ==================================================
+// SUPPLIERS
+// ==================================================
+
+
+// SHOW SUPPLIERS
+
+suppliersButton.addEventListener(
+    "click",
+    async function() {
+
+        productsSection.style.display =
+            "none";
+
+        inventorySection.style.display =
+            "none";
+
+        addProductForm.style.display =
+            "none";
+
+        suppliersSection.style.display =
+            "block";
+
+        suppliersList.textContent =
+            "Loading suppliers...";
+
+
+        try {
+
+            await loadSuppliers();
+
+        } catch (error) {
+
+            console.error(
+                "Error loading suppliers:",
+                error
+            );
+
+            suppliersList.textContent =
+                "Unable to load suppliers.";
+
+        }
+
+    }
+);
+
+
+// LOAD SUPPLIERS
+
+async function loadSuppliers() {
+
+    const suppliersSnapshot =
+        await getDocs(
+            collection(
+                db,
+                "suppliers"
+            )
+        );
+
+
+    suppliersList.innerHTML = "";
+
+
+    if (suppliersSnapshot.empty) {
+
+        suppliersList.textContent =
+            "No suppliers found.";
+
+        return;
+
+    }
+
+
+    suppliersSnapshot.forEach(
+        function(documentSnapshot) {
+
+            const supplier =
+                documentSnapshot.data();
+
+            const supplierId =
+                documentSnapshot.id;
+
+
+            const supplierCard =
+                document.createElement("div");
+
+            supplierCard.className =
+                "product-card";
+
+
+            supplierCard.innerHTML = `
+                <h3>
+                    ${supplier.name}
+                </h3>
+
+                <p>
+                    Contact Person:
+                    ${supplier.contact}
+                </p>
+
+                <p>
+                    Phone:
+                    ${supplier.phone}
+                </p>
+
+                <p>
+                    Address:
+                    ${supplier.address}
+                </p>
+
+                <button class="edit-supplier-button">
+                    Edit
+                </button>
+
+                <button class="delete-supplier-button">
+                    Delete
+                </button>
+            `;
+
+
+            // EDIT SUPPLIER
+
+            const editButton =
+                supplierCard.querySelector(
+                    ".edit-supplier-button"
+                );
+
+
+            editButton.addEventListener(
+                "click",
+                function() {
+
+                    editSupplier(
+                        supplierId,
+                        supplier
+                    );
+
+                }
+            );
+
+
+            // DELETE SUPPLIER
+
+            const deleteButton =
+                supplierCard.querySelector(
+                    ".delete-supplier-button"
+                );
+
+
+            deleteButton.addEventListener(
+                "click",
+                function() {
+
+                    deleteSupplier(
+                        supplierId
+                    );
+
+                }
+            );
+
+
+            suppliersList.appendChild(
+                supplierCard
+            );
+
+        }
+    );
+
+}
+
+
+// SHOW ADD SUPPLIER FORM
+
+addSupplierButton.addEventListener(
+    "click",
+    function() {
+
+        addSupplierForm.style.display =
+            "block";
+
+        supplierMessage.textContent = "";
+
+    }
+);
+
+
+// SAVE SUPPLIER
+
+saveSupplierButton.addEventListener(
+    "click",
+    async function() {
+
+        const name =
+            document.getElementById(
+                "supplierName"
+            ).value.trim();
+
+        const contact =
+            document.getElementById(
+                "supplierContact"
+            ).value.trim();
+
+        const phone =
+            document.getElementById(
+                "supplierPhone"
+            ).value.trim();
+
+        const address =
+            document.getElementById(
+                "supplierAddress"
+            ).value.trim();
+
+
+        if (
+            name === "" ||
+            contact === "" ||
+            phone === "" ||
+            address === ""
+        ) {
+
+            supplierMessage.textContent =
+                "Please complete all fields.";
+
+            return;
+
+        }
+
+
+        supplierMessage.textContent =
+            "Saving supplier...";
+
+
+        try {
+
+            await addDoc(
+                collection(
+                    db,
+                    "suppliers"
+                ),
+                {
+                    name: name,
+                    contact: contact,
+                    phone: phone,
+                    address: address
+                }
+            );
+
+
+            supplierMessage.textContent =
+                "Supplier added successfully!";
+
+
+            document.getElementById(
+                "supplierName"
+            ).value = "";
+
+            document.getElementById(
+                "supplierContact"
+            ).value = "";
+
+            document.getElementById(
+                "supplierPhone"
+            ).value = "";
+
+            document.getElementById(
+                "supplierAddress"
+            ).value = "";
+
+
+            await loadSuppliers();
+
+        } catch (error) {
+
+            console.error(
+                "Error saving supplier:",
+                error
+            );
+
+            supplierMessage.textContent =
+                "Unable to save supplier.";
+
+        }
+
+    }
+);
+
+
+// EDIT SUPPLIER
+
+async function editSupplier(
+    supplierId,
+    supplier
+) {
+
+    const newName =
+        prompt(
+            "Supplier Name:",
+            supplier.name
+        );
+
+
+    if (newName === null) {
+        return;
+    }
+
+
+    const newContact =
+        prompt(
+            "Contact Person:",
+            supplier.contact
+        );
+
+
+    if (newContact === null) {
+        return;
+    }
+
+
+    const newPhone =
+        prompt(
+            "Phone Number:",
+            supplier.phone
+        );
+
+
+    if (newPhone === null) {
+        return;
+    }
+
+
+    const newAddress =
+        prompt(
+            "Address:",
+            supplier.address
+        );
+
+
+    if (newAddress === null) {
+        return;
+    }
+
+
+    if (
+        newName.trim() === "" ||
+        newContact.trim() === "" ||
+        newPhone.trim() === "" ||
+        newAddress.trim() === ""
+    ) {
+
+        alert(
+            "Please complete all fields."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        await updateDoc(
+            doc(
+                db,
+                "suppliers",
+                supplierId
+            ),
+            {
+                name: newName.trim(),
+                contact: newContact.trim(),
+                phone: newPhone.trim(),
+                address: newAddress.trim()
+            }
+        );
+
+
+        alert(
+            "Supplier updated successfully!"
+        );
+
+
+        await loadSuppliers();
+
+    } catch (error) {
+
+        console.error(
+            "Error updating supplier:",
+            error
+        );
+
+        alert(
+            "Unable to update supplier."
+        );
+
+    }
+
+}
+
+
+// DELETE SUPPLIER
+
+async function deleteSupplier(
+    supplierId
+) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this supplier?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "suppliers",
+                supplierId
+            )
+        );
+
+
+        alert(
+            "Supplier deleted successfully!"
+        );
+
+
+        await loadSuppliers();
+
+    } catch (error) {
+
+        console.error(
+            "Error deleting supplier:",
+            error
+        );
+
+        alert(
+            "Unable to delete supplier."
+        );
+
+    }
+
+}
+
+
+// CANCEL SUPPLIER FORM
+
+cancelSupplierButton.addEventListener(
+    "click",
+    function() {
+
+        addSupplierForm.style.display =
+            "none";
+
+        supplierMessage.textContent = "";
+
+    }
+);
+
+
+// BACK FROM SUPPLIERS
+
+backFromSuppliersButton.addEventListener(
+    "click",
+    function() {
+
+        suppliersSection.style.display =
+            "none";
+
+        addSupplierForm.style.display =
+            "none";
+
+    }
+);
+
+
+// ==================================================
 // LOGOUT
+// ==================================================
 
 logoutButton.addEventListener(
     "click",
