@@ -175,3 +175,15 @@ body {
 
     cursor: pointer;
 }
+
+/* HIDE SYSTEM SECTIONS BY DEFAULT */
+
+.products-section,
+.inventory-section,
+.suppliers-section,
+.reports-section,
+.activity-logs-section,
+.add-product-form,
+.add-supplier-form {
+    display: none;
+}
