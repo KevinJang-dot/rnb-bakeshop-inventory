@@ -133,7 +133,7 @@
                         View inventory reports.
                     </p>
 
-                    <button>
+                    <button id="reportsButton">
                         View Reports
                     </button>
 
@@ -159,8 +159,6 @@
                     Add Product
                 </button>
 
-
-                <!-- ADD PRODUCT FORM -->
 
                 <div
                     id="addProductForm"
@@ -298,8 +296,6 @@
                 </button>
 
 
-                <!-- ADD SUPPLIER FORM -->
-
                 <div
                     id="addSupplierForm"
                     class="add-supplier-form"
@@ -379,6 +375,85 @@
 
                 <div id="suppliersList">
                     Loading suppliers...
+                </div>
+
+            </section>
+
+
+            <!-- REPORTS SECTION -->
+
+            <section
+                id="reportsSection"
+                class="reports-section"
+            >
+
+                <h2>Inventory Reports</h2>
+
+                <button id="backFromReportsButton">
+                    Back to Dashboard
+                </button>
+
+
+                <!-- SUMMARY -->
+
+                <div class="report-summary">
+
+                    <div class="dashboard-card">
+
+                        <h3>Total Products</h3>
+
+                        <p id="totalProducts">
+                            0
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <h3>Total Stock</h3>
+
+                        <p id="totalStock">
+                            0
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <h3>Low Stock Products</h3>
+
+                        <p id="lowStockProducts">
+                            0
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-card">
+
+                        <h3>Total Suppliers</h3>
+
+                        <p id="totalSuppliers">
+                            0
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INVENTORY REPORT -->
+
+                <div class="report-table-container">
+
+                    <h3>Inventory Summary</h3>
+
+                    <div id="reportList">
+                        Loading report...
+                    </div>
+
                 </div>
 
             </section>
