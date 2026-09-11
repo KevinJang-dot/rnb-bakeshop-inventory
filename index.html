@@ -74,37 +74,54 @@
             </p>
 
 
+            <!-- DASHBOARD CARDS -->
+
             <div class="dashboard-cards">
 
                 <div class="dashboard-card">
                     <h3>Products</h3>
                     <p>Manage bakery products.</p>
-                    <button id="productsButton">View Products</button>
+                    <button id="productsButton">
+                        View Products
+                    </button>
                 </div>
+
 
                 <div class="dashboard-card">
                     <h3>Inventory</h3>
                     <p>Monitor available stocks.</p>
-                    <button>View Inventory</button>
+                    <button id="inventoryButton">
+                        View Inventory
+                    </button>
                 </div>
+
 
                 <div class="dashboard-card">
                     <h3>Suppliers</h3>
                     <p>Manage supplier information.</p>
-                    <button>View Suppliers</button>
+                    <button>
+                        View Suppliers
+                    </button>
                 </div>
+
 
                 <div class="dashboard-card">
                     <h3>Reports</h3>
                     <p>View inventory reports.</p>
-                    <button>View Reports</button>
+                    <button>
+                        View Reports
+                    </button>
                 </div>
 
             </div>
 
 
             <!-- PRODUCTS SECTION -->
-            <section id="productsSection" class="products-section">
+
+            <section
+                id="productsSection"
+                class="products-section"
+            >
 
                 <h2>Products</h2>
 
@@ -119,9 +136,13 @@
 
                 <!-- ADD PRODUCT FORM -->
 
-                <div id="addProductForm" class="add-product-form">
+                <div
+                    id="addProductForm"
+                    class="add-product-form"
+                >
 
                     <h3>Add New Product</h3>
+
 
                     <label for="productName">
                         Product Name
@@ -186,11 +207,17 @@
                     >
 
 
-                    <button id="saveProductButton" type="button">
+                    <button
+                        id="saveProductButton"
+                        type="button"
+                    >
                         Save Product
                     </button>
 
-                    <button id="cancelProductButton" type="button">
+                    <button
+                        id="cancelProductButton"
+                        type="button"
+                    >
                         Cancel
                     </button>
 
@@ -205,12 +232,36 @@
 
             </section>
 
+
+            <!-- INVENTORY SECTION -->
+
+            <section
+                id="inventorySection"
+                class="inventory-section"
+            >
+
+                <h2>Inventory</h2>
+
+                <button id="backFromInventoryButton">
+                    Back to Dashboard
+                </button>
+
+
+                <div id="inventoryList">
+                    Loading inventory...
+                </div>
+
+            </section>
+
         </main>
 
     </div>
 
 
-    <script type="module" src="script.js"></script>
+    <script
+        type="module"
+        src="script.js"
+    ></script>
 
 </body>
 </html>
