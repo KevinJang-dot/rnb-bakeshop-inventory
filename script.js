@@ -11,7 +11,10 @@ import {
     getFirestore,
     collection,
     getDocs,
-    addDoc
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
@@ -154,7 +157,7 @@ productsButton.addEventListener("click", async function() {
 });
 
 
-// LOAD PRODUCTS FROM FIRESTORE
+// LOAD PRODUCTS
 
 async function loadProducts() {
 
@@ -177,6 +180,8 @@ async function loadProducts() {
 
         const product = documentSnapshot.data();
 
+        const productId = documentSnapshot.id;
+
         const productCard =
             document.createElement("div");
 
@@ -185,11 +190,51 @@ async function loadProducts() {
 
         productCard.innerHTML = `
             <h3>${product.name}</h3>
+
             <p>Category: ${product.category}</p>
+
             <p>Price: ₱${product.price}</p>
+
             <p>Stock: ${product.stock}</p>
+
             <p>Reorder Level: ${product.reorderLevel}</p>
+
+            <button class="edit-product-button">
+                Edit
+            </button>
+
+            <button class="delete-product-button">
+                Delete
+            </button>
         `;
+
+
+        // EDIT BUTTON
+
+        const editButton =
+            productCard.querySelector(".edit-product-button");
+
+        editButton.addEventListener("click", function() {
+
+            editProduct(
+                productId,
+                product
+            );
+
+        });
+
+
+        // DELETE BUTTON
+
+        const deleteButton =
+            productCard.querySelector(".delete-product-button");
+
+        deleteButton.addEventListener("click", function() {
+
+            deleteProduct(productId);
+
+        });
+
 
         productsList.appendChild(productCard);
 
@@ -226,10 +271,10 @@ saveProductButton.addEventListener("click", async function() {
         Number(document.getElementById("productStock").value);
 
     const reorderLevel =
-        Number(document.getElementById("productReorderLevel").value);
+        Number(
+            document.getElementById("productReorderLevel").value
+        );
 
-
-    // VALIDATION
 
     if (
         name === "" ||
@@ -269,8 +314,6 @@ saveProductButton.addEventListener("click", async function() {
             "Product added successfully!";
 
 
-        // CLEAR FORM
-
         document.getElementById("productName").value = "";
 
         document.getElementById("productCategory").value = "";
@@ -282,10 +325,7 @@ saveProductButton.addEventListener("click", async function() {
         document.getElementById("productReorderLevel").value = "";
 
 
-        // REFRESH PRODUCT LIST
-
         await loadProducts();
-
 
     } catch (error) {
 
@@ -297,6 +337,136 @@ saveProductButton.addEventListener("click", async function() {
     }
 
 });
+
+
+// EDIT PRODUCT
+
+async function editProduct(productId, product) {
+
+    const newName =
+        prompt(
+            "Product Name:",
+            product.name
+        );
+
+    if (newName === null) {
+        return;
+    }
+
+
+    const newCategory =
+        prompt(
+            "Category:",
+            product.category
+        );
+
+    if (newCategory === null) {
+        return;
+    }
+
+
+    const newPrice =
+        prompt(
+            "Price:",
+            product.price
+        );
+
+    if (newPrice === null) {
+        return;
+    }
+
+
+    const newStock =
+        prompt(
+            "Stock:",
+            product.stock
+        );
+
+    if (newStock === null) {
+        return;
+    }
+
+
+    const newReorderLevel =
+        prompt(
+            "Reorder Level:",
+            product.reorderLevel
+        );
+
+    if (newReorderLevel === null) {
+        return;
+    }
+
+
+    try {
+
+        await updateDoc(
+            doc(db, "products", productId),
+            {
+                name: newName.trim(),
+                category: newCategory.trim(),
+                price: Number(newPrice),
+                stock: Number(newStock),
+                reorderLevel: Number(newReorderLevel)
+            }
+        );
+
+
+        alert("Product updated successfully!");
+
+        await loadProducts();
+
+    } catch (error) {
+
+        console.error(
+            "Error updating product:",
+            error
+        );
+
+        alert("Unable to update product.");
+
+    }
+
+}
+
+
+// DELETE PRODUCT
+
+async function deleteProduct(productId) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this product?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(db, "products", productId)
+        );
+
+
+        alert("Product deleted successfully!");
+
+        await loadProducts();
+
+    } catch (error) {
+
+        console.error(
+            "Error deleting product:",
+            error
+        );
+
+        alert("Unable to delete product.");
+
+    }
+
+}
 
 
 // CANCEL ADD PRODUCT
