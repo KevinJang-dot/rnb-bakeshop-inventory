@@ -60,7 +60,9 @@
                 <p>Inventory Management System</p>
             </div>
 
-            <button id="logoutButton">Logout</button>
+            <button id="logoutButton">
+                Logout
+            </button>
 
         </header>
 
@@ -79,38 +81,62 @@
             <div class="dashboard-cards">
 
                 <div class="dashboard-card">
+
                     <h3>Products</h3>
-                    <p>Manage bakery products.</p>
+
+                    <p>
+                        Manage bakery products.
+                    </p>
+
                     <button id="productsButton">
                         View Products
                     </button>
+
                 </div>
 
 
                 <div class="dashboard-card">
+
                     <h3>Inventory</h3>
-                    <p>Monitor available stocks.</p>
+
+                    <p>
+                        Monitor available stocks.
+                    </p>
+
                     <button id="inventoryButton">
                         View Inventory
                     </button>
+
                 </div>
 
 
                 <div class="dashboard-card">
+
                     <h3>Suppliers</h3>
-                    <p>Manage supplier information.</p>
-                    <button>
+
+                    <p>
+                        Manage supplier information.
+                    </p>
+
+                    <button id="suppliersButton">
                         View Suppliers
                     </button>
+
                 </div>
 
 
                 <div class="dashboard-card">
+
                     <h3>Reports</h3>
-                    <p>View inventory reports.</p>
+
+                    <p>
+                        View inventory reports.
+                    </p>
+
                     <button>
                         View Reports
                     </button>
+
                 </div>
 
             </div>
@@ -249,6 +275,110 @@
 
                 <div id="inventoryList">
                     Loading inventory...
+                </div>
+
+            </section>
+
+
+            <!-- SUPPLIERS SECTION -->
+
+            <section
+                id="suppliersSection"
+                class="suppliers-section"
+            >
+
+                <h2>Suppliers</h2>
+
+                <button id="backFromSuppliersButton">
+                    Back to Dashboard
+                </button>
+
+                <button id="addSupplierButton">
+                    Add Supplier
+                </button>
+
+
+                <!-- ADD SUPPLIER FORM -->
+
+                <div
+                    id="addSupplierForm"
+                    class="add-supplier-form"
+                >
+
+                    <h3>Add New Supplier</h3>
+
+
+                    <label for="supplierName">
+                        Supplier Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierName"
+                        placeholder="Enter supplier name"
+                        required
+                    >
+
+
+                    <label for="supplierContact">
+                        Contact Person
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierContact"
+                        placeholder="Enter contact person"
+                        required
+                    >
+
+
+                    <label for="supplierPhone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierPhone"
+                        placeholder="Enter phone number"
+                        required
+                    >
+
+
+                    <label for="supplierAddress">
+                        Address
+                    </label>
+
+                    <input
+                        type="text"
+                        id="supplierAddress"
+                        placeholder="Enter supplier address"
+                        required
+                    >
+
+
+                    <button
+                        id="saveSupplierButton"
+                        type="button"
+                    >
+                        Save Supplier
+                    </button>
+
+
+                    <button
+                        id="cancelSupplierButton"
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <p id="supplierMessage"></p>
+
+                </div>
+
+
+                <div id="suppliersList">
+                    Loading suppliers...
                 </div>
 
             </section>
