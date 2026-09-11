@@ -14,7 +14,8 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
-    doc
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
@@ -215,20 +216,82 @@ loginForm.addEventListener(
 // AUTHENTICATION STATE
 // ==================================================
 
+// ==================================================
+// AUTHENTICATION STATE AND ADMIN AUTHORIZATION
+// ==================================================
+
 onAuthStateChanged(
     auth,
-    function(user) {
+    async function(user) {
 
         if (user) {
 
-            loginPage.style.display =
-                "none";
+            try {
 
-            dashboardPage.style.display =
-                "block";
+                // Get the logged-in user's document
+                const userDocument =
+                    await getDoc(
+                        doc(
+                            db,
+                            "users",
+                            user.uid
+                        )
+                    );
 
-            welcomeMessage.textContent =
-                "Welcome, " + user.email + "!";
+                // Check if user document exists
+                if (!userDocument.exists()) {
+
+                    alert(
+                        "Your account is not authorized to access this system."
+                    );
+
+                    await signOut(auth);
+
+                    return;
+                }
+
+                // Get user data
+                const userData =
+                    userDocument.data();
+
+                // Check user role
+                if (userData.role !== "admin") {
+
+                    alert(
+                        "Access denied. Administrator privileges are required."
+                    );
+
+                    await signOut(auth);
+
+                    return;
+                }
+
+                // Authorized admin
+                loginPage.style.display =
+                    "none";
+
+                dashboardPage.style.display =
+                    "block";
+
+                welcomeMessage.textContent =
+                    "Welcome, " +
+                    userData.name +
+                    "! (Administrator)";
+
+            } catch (error) {
+
+                console.error(
+                    "Authorization error:",
+                    error
+                );
+
+                alert(
+                    "Unable to verify your account authorization."
+                );
+
+                await signOut(auth);
+
+            }
 
         } else {
 
