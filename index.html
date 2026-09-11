@@ -112,6 +112,93 @@
                     Back to Dashboard
                 </button>
 
+                <button id="addProductButton">
+                    Add Product
+                </button>
+
+
+                <!-- ADD PRODUCT FORM -->
+
+                <div id="addProductForm" class="add-product-form">
+
+                    <h3>Add New Product</h3>
+
+                    <label for="productName">
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                        required
+                    >
+
+
+                    <label for="productCategory">
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productCategory"
+                        placeholder="Enter category"
+                        required
+                    >
+
+
+                    <label for="productPrice">
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="Enter price"
+                        min="0"
+                        required
+                    >
+
+
+                    <label for="productStock">
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="Enter stock"
+                        min="0"
+                        required
+                    >
+
+
+                    <label for="productReorderLevel">
+                        Reorder Level
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productReorderLevel"
+                        placeholder="Enter reorder level"
+                        min="0"
+                        required
+                    >
+
+
+                    <button id="saveProductButton" type="button">
+                        Save Product
+                    </button>
+
+                    <button id="cancelProductButton" type="button">
+                        Cancel
+                    </button>
+
+                    <p id="productMessage"></p>
+
+                </div>
+
+
                 <div id="productsList">
                     Loading products...
                 </div>
