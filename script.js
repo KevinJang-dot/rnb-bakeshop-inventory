@@ -1971,3 +1971,161 @@ logoutButton.addEventListener(
 
     }
 );
+
+// ==================================================
+// ACTIVITY LOGS
+// ==================================================
+
+const activityLogsButtonFix =
+    document.getElementById("activityLogsButton");
+
+const activityLogsSectionFix =
+    document.getElementById("activityLogsSection");
+
+const backFromActivityLogsButtonFix =
+    document.getElementById("backFromActivityLogsButton");
+
+const activityLogsListFix =
+    document.getElementById("activityLogsList");
+
+
+// SHOW ACTIVITY LOGS
+
+activityLogsButtonFix.addEventListener(
+    "click",
+    async function() {
+
+        // Hide other sections
+
+        document.getElementById(
+            "productsSection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "inventorySection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "suppliersSection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "reportsSection"
+        ).style.display = "none";
+
+
+        // Show Activity Logs
+
+        activityLogsSectionFix.style.display =
+            "block";
+
+
+        // Load logs
+
+        activityLogsListFix.textContent =
+            "Loading activity logs...";
+
+
+        try {
+
+            const logsSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "activity_logs"
+                    )
+                );
+
+
+            activityLogsListFix.innerHTML = "";
+
+
+            if (logsSnapshot.empty) {
+
+                activityLogsListFix.textContent =
+                    "No activity logs found.";
+
+                return;
+
+            }
+
+
+            logsSnapshot.forEach(
+                function(documentSnapshot) {
+
+                    const log =
+                        documentSnapshot.data();
+
+                    const logItem =
+                        document.createElement("div");
+
+                    logItem.className =
+                        "activity-log-item";
+
+
+                    let dateText =
+                        "Date unavailable";
+
+
+                    if (log.timestamp) {
+
+                        dateText =
+                            log.timestamp
+                                .toDate()
+                                .toLocaleString();
+
+                    }
+
+
+                    logItem.innerHTML = `
+                        <strong>
+                            ${log.action || "Activity"}
+                        </strong>
+
+                        <p>
+                            ${log.details || ""}
+                        </p>
+
+                        <small>
+                            User: ${log.userEmail || "Unknown"}
+                            <br>
+                            ${dateText}
+                        </small>
+                    `;
+
+
+                    activityLogsListFix.appendChild(
+                        logItem
+                    );
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Error loading activity logs:",
+                error
+            );
+
+            activityLogsListFix.textContent =
+                "Unable to load activity logs.";
+
+        }
+
+    }
+);
+
+
+// BACK FROM ACTIVITY LOGS
+
+backFromActivityLogsButtonFix.addEventListener(
+    "click",
+    function() {
+
+        activityLogsSectionFix.style.display =
+            "none";
+
+    }
+);
