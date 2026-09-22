@@ -187,3 +187,392 @@ body {
 .add-supplier-form {
     display: none;
 }
+
+/* ==================================================
+   MODERN SYSTEM UI
+   ================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6f8;
+    color: #1f2937;
+}
+
+
+/* ==================================================
+   DASHBOARD
+   ================================================== */
+
+.dashboard-content {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-heading h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #1f2937;
+}
+
+.page-heading p {
+    margin-top: 8px;
+    color: #6b7280;
+}
+
+
+/* ==================================================
+   DASHBOARD CARDS
+   ================================================== */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
+}
+
+.dashboard-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.dashboard-card p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+
+/* ==================================================
+   MODULE PAGES
+   ================================================== */
+
+.products-section,
+.inventory-section,
+.suppliers-section,
+.reports-section,
+.activity-logs-section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.products-section h2,
+.inventory-section h2,
+.suppliers-section h2,
+.reports-section h2,
+.activity-logs-section h2 {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+/* ==================================================
+   BUTTONS
+   ================================================== */
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #1f2937;
+    color: white;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+#backToDashboardButton,
+#backFromInventoryButton,
+#backFromSuppliersButton,
+#backFromReportsButton,
+#backFromActivityLogsButton {
+    background: #e5e7eb;
+    color: #1f2937;
+    margin-right: 8px;
+    margin-bottom: 25px;
+}
+
+#addProductButton,
+#addSupplierButton {
+    background: #2563eb;
+    margin-bottom: 25px;
+}
+
+
+/* ==================================================
+   PRODUCT CARDS
+   ================================================== */
+
+#productsList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+    transition: 0.2s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.product-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 19px;
+}
+
+.product-card p {
+    margin: 8px 0;
+    color: #4b5563;
+}
+
+.product-card button {
+    margin-top: 15px;
+    margin-right: 8px;
+}
+
+.edit-product-button {
+    background: #2563eb;
+}
+
+.delete-product-button {
+    background: #dc2626;
+}
+
+
+/* ==================================================
+   INVENTORY
+   ================================================== */
+
+#inventoryList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.stock-in-button {
+    background: #16a34a;
+}
+
+.stock-out-button {
+    background: #dc2626;
+}
+
+
+/* ==================================================
+   SUPPLIERS
+   ================================================== */
+
+#suppliersList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.supplier-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.supplier-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 19px;
+}
+
+.supplier-card p {
+    margin: 8px 0;
+    color: #4b5563;
+}
+
+.supplier-card button {
+    margin-top: 15px;
+    margin-right: 8px;
+}
+
+.edit-supplier-button {
+    background: #2563eb;
+}
+
+.delete-supplier-button {
+    background: #dc2626;
+}
+
+
+/* ==================================================
+   FORMS
+   ================================================== */
+
+.add-product-form,
+.add-supplier-form {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.add-product-form h3,
+.add-supplier-form h3 {
+    margin-top: 0;
+}
+
+.add-product-form label,
+.add-supplier-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.add-product-form input,
+.add-supplier-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#saveProductButton,
+#saveSupplierButton {
+    background: #16a34a;
+    margin-top: 20px;
+}
+
+#cancelProductButton,
+#cancelSupplierButton {
+    background: #6b7280;
+    margin-top: 20px;
+}
+
+
+/* ==================================================
+   REPORTS
+   ================================================== */
+
+.report-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.report-summary .dashboard-card {
+    text-align: center;
+}
+
+.report-summary .dashboard-card p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #111827;
+    margin: 10px 0 0;
+}
+
+.report-table-container {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+
+/* ==================================================
+   ACTIVITY LOGS
+   ================================================== */
+
+#activityLogsList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.activity-log-item {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #2563eb;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.activity-log-item strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.activity-log-item p {
+    margin: 5px 0;
+    color: #4b5563;
+}
+
+.activity-log-item small {
+    color: #6b7280;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 800px) {
+
+    .dashboard-cards,
+    #productsList,
+    #inventoryList,
+    #suppliersList,
+    .report-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+    }
+
+}
+
+
