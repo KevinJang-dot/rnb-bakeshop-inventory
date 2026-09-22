@@ -15,7 +15,8 @@ import {
     updateDoc,
     deleteDoc,
     doc,
-    getDoc
+    getDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
@@ -38,6 +39,42 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const db = getFirestore(app);
+
+
+// ==================================================
+// ACTIVITY LOG FUNCTION
+// ==================================================
+
+async function addActivityLog(action, details) {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        return;
+    }
+
+    try {
+
+        await addDoc(
+            collection(db, "activity_logs"),
+            {
+                action: action,
+                details: details,
+                userEmail: user.email,
+                timestamp: serverTimestamp()
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Activity log error:",
+            error
+        );
+
+    }
+
+}
 
 
 // GET HTML ELEMENTS
@@ -574,6 +611,11 @@ saveProductButton.addEventListener(
                     reorderLevel: reorderLevel
                 }
             );
+
+            await addActivityLog(
+    "Add Product",
+    "Added product: " + name
+);
 
 
             productMessage.textContent =
