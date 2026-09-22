@@ -354,18 +354,7 @@ onAuthStateChanged(
 productsButton.addEventListener(
     "click",
     async function() {
-
-        productsSection.style.display =
-            "block";
-
-        inventorySection.style.display =
-            "none";
-
-        suppliersSection.style.display =
-            "none";
-
-        reportsSection.style.display =
-            "none";
+        showModule(productsSection);
 
         productsList.textContent =
             "Loading products...";
@@ -900,11 +889,7 @@ backToDashboardButton.addEventListener(
     "click",
     function() {
 
-        productsSection.style.display =
-            "none";
-
-        addProductForm.style.display =
-            "none";
+        showDashboardHome();
 
     }
 );
@@ -921,20 +906,7 @@ inventoryButton.addEventListener(
     "click",
     async function() {
 
-        productsSection.style.display =
-            "none";
-
-        suppliersSection.style.display =
-            "none";
-
-        reportsSection.style.display =
-            "none";
-
-        addProductForm.style.display =
-            "none";
-
-        inventorySection.style.display =
-            "block";
+        showModule(inventorySection);
 
         inventoryList.textContent =
             "Loading inventory...";
@@ -1290,8 +1262,7 @@ backFromInventoryButton.addEventListener(
     "click",
     function() {
 
-        inventorySection.style.display =
-            "none";
+        showDashboardHome();
 
     }
 );
@@ -1308,20 +1279,7 @@ suppliersButton.addEventListener(
     "click",
     async function() {
 
-        productsSection.style.display =
-            "none";
-
-        inventorySection.style.display =
-            "none";
-
-        reportsSection.style.display =
-            "none";
-
-        addProductForm.style.display =
-            "none";
-
-        suppliersSection.style.display =
-            "block";
+        showModule(suppliersSection);
 
         suppliersList.textContent =
             "Loading suppliers...";
@@ -1799,11 +1757,7 @@ backFromSuppliersButton.addEventListener(
     "click",
     function() {
 
-        suppliersSection.style.display =
-            "none";
-
-        addSupplierForm.style.display =
-            "none";
+        showDashboardHome();
 
     }
 );
@@ -1820,20 +1774,7 @@ reportsButton.addEventListener(
     "click",
     async function() {
 
-        productsSection.style.display =
-            "none";
-
-        inventorySection.style.display =
-            "none";
-
-        suppliersSection.style.display =
-            "none";
-
-        addProductForm.style.display =
-            "none";
-
-        reportsSection.style.display =
-            "block";
+        showModule(reportsSection);
 
         reportList.textContent =
             "Loading report...";
@@ -2055,8 +1996,7 @@ backFromReportsButton.addEventListener(
     "click",
     function() {
 
-        reportsSection.style.display =
-            "none";
+        showDashboardHome();
 
     }
 );
@@ -2102,6 +2042,51 @@ const backFromActivityLogsButtonFix =
 const activityLogsListFix =
     document.getElementById("activityLogsList");
 
+// ==================================================
+// PAGE NAVIGATION
+// ==================================================
+
+const dashboardHome =
+    document.getElementById("dashboardHome");
+
+
+function hideAllSections() {
+
+    productsSection.style.display = "none";
+
+    inventorySection.style.display = "none";
+
+    suppliersSection.style.display = "none";
+
+    reportsSection.style.display = "none";
+
+    activityLogsSection.style.display = "none";
+
+    addProductForm.style.display = "none";
+
+    addSupplierForm.style.display = "none";
+}
+
+
+function showModule(section) {
+
+    dashboardHome.style.display = "none";
+
+    hideAllSections();
+
+    section.style.display = "block";
+
+}
+
+
+function showDashboardHome() {
+
+    hideAllSections();
+
+    dashboardHome.style.display = "block";
+
+}
+
 
 // SHOW ACTIVITY LOGS
 
@@ -2109,32 +2094,7 @@ activityLogsButtonFix.addEventListener(
     "click",
     async function() {
 
-        // Hide other sections
-
-        document.getElementById(
-            "productsSection"
-        ).style.display = "none";
-
-        document.getElementById(
-            "inventorySection"
-        ).style.display = "none";
-
-        document.getElementById(
-            "suppliersSection"
-        ).style.display = "none";
-
-        document.getElementById(
-            "reportsSection"
-        ).style.display = "none";
-
-
-        // Show Activity Logs
-
-        activityLogsSectionFix.style.display =
-            "block";
-
-
-        // Load logs
+        showModule(activityLogsSection);
 
         activityLogsListFix.textContent =
             "Loading activity logs...";
@@ -2238,8 +2198,7 @@ backFromActivityLogsButtonFix.addEventListener(
     "click",
     function() {
 
-        activityLogsSectionFix.style.display =
-            "none";
+        showDashboardHome();
 
     }
 );
