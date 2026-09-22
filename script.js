@@ -775,6 +775,11 @@ async function editProduct(
             }
         );
 
+        await addActivityLog(
+    "Edit Product",
+    "Updated product: " + newName.trim()
+);
+
 
         alert(
             "Product updated successfully!"
@@ -805,6 +810,25 @@ async function deleteProduct(
     productId
 ) {
 
+    const productDocument =
+        await getDoc(
+            doc(
+                db,
+                "products",
+                productId
+            )
+        );
+
+    const product =
+        productDocument.exists()
+            ? productDocument.data()
+            : null;
+
+    const productName =
+        product
+            ? product.name
+            : "Unknown product";
+
     const confirmDelete =
         confirm(
             "Are you sure you want to delete this product?"
@@ -825,6 +849,11 @@ async function deleteProduct(
                 productId
             )
         );
+        
+        await addActivityLog(
+    "Delete Product",
+    "Deleted product: " + productName
+);
 
 
         alert(
@@ -1127,6 +1156,11 @@ async function stockIn(
             }
         );
 
+        await addActivityLog(
+    "Stock In",
+    "Added " + amount + " stock to product: " + product.name
+);
+
 
         alert(
             "Stock added successfully!"
@@ -1220,6 +1254,11 @@ async function stockOut(
                 stock: newStock
             }
         );
+
+        await addActivityLog(
+    "Stock Out",
+    "Removed " + amount + " stock from product: " + product.name
+);
 
 
         alert(
@@ -1504,6 +1543,11 @@ saveSupplierButton.addEventListener(
                 }
             );
 
+            await addActivityLog(
+    "Add Supplier",
+    "Added supplier: " + name
+);
+
 
             supplierMessage.textContent =
                 "Supplier added successfully!";
@@ -1631,6 +1675,11 @@ async function editSupplier(
             }
         );
 
+        await addActivityLog(
+    "Edit Supplier",
+    "Updated supplier: " + newName.trim()
+);
+
 
         alert(
             "Supplier updated successfully!"
@@ -1660,6 +1709,24 @@ async function editSupplier(
 async function deleteSupplier(
     supplierId
 ) {
+    const supplierDocument =
+    await getDoc(
+        doc(
+            db,
+            "suppliers",
+            supplierId
+        )
+    );
+
+const supplier =
+    supplierDocument.exists()
+        ? supplierDocument.data()
+        : null;
+
+const supplierName =
+    supplier
+        ? supplier.name
+        : "Unknown supplier";
 
     const confirmDelete =
         confirm(
@@ -1681,6 +1748,11 @@ async function deleteSupplier(
                 supplierId
             )
         );
+
+        await addActivityLog(
+    "Delete Supplier",
+    "Deleted supplier: " + supplierName
+);
 
 
         alert(
